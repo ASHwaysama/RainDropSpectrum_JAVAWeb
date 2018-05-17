@@ -10,20 +10,21 @@
 <title>查询结果</title>
 </head>
 <body>
+
+<%--
 <a href="index.jsp" style="color:red; font-size:30px;">返回重选</a>
 <p>您要查询的站点ID是<p>
 <%= request.getParameter("ID")%>
 
 <p>您要查询的起始时间是<p>
 <%= request.getParameter("Start")%>
-<%Timestamp Start = Timestamp.valueOf(request.getParameter("Start")); %>
 
 <p>您要查询的终止时间是<p>
 <%= request.getParameter("End")%>
-<%Timestamp End = Timestamp.valueOf(request.getParameter("End")); %>
 <br>
- <%
- 
+ --%>
+ <%  Timestamp Start = Timestamp.valueOf(request.getParameter("Start")); 
+     Timestamp End = Timestamp.valueOf(request.getParameter("End")); 
      Connection conn = null;
 	 conn=new DBconn().getConn();
      Statement statReal = null;
@@ -32,8 +33,8 @@
      ResultSet rsSpectrum = null;
      statReal = conn.createStatement();
      statSpectrum = conn.createStatement();
-     String Realsql = "select Sta_WeatherCode,Sta_MORSee,Sta_KineticEnergy from RealData where Sta_ID = "+request.getParameter("ID")+" and Sta_TimeIn > '"+Start+"' and Sta_TimeIn < '"+End+"'";
-     String Spectrumsql = "select Sta_ID,Sta_TimeIn,Sta_DVData from SpectrumData where Sta_ID = "+request.getParameter("ID")+" and Sta_TimeIn > '"+Start+"' and Sta_TimeIn < '"+End+"'";
+     String Realsql = "select Sta_GranuleNums,Sta_RainIntensity,Sta_RainSum,Sta_RadarDBZ,Sta_WeatherCode,Sta_MORSee,Sta_KineticEnergy from RealData where Sta_ID = "+request.getParameter("ID")+" and Sta_TimeIn > '"+Start+"' and Sta_TimeIn < '"+End+"' order by Sta_TimeIn";
+     String Spectrumsql = "select Sta_ID,Sta_TimeIn,Sta_DVData from SpectrumData where Sta_ID = "+request.getParameter("ID")+" and Sta_TimeIn > '"+Start+"' and Sta_TimeIn < '"+End+"' order by Sta_TimeIn";
      rsReal = statReal.executeQuery(Realsql);
      rsSpectrum = statSpectrum.executeQuery(Spectrumsql); 
      
@@ -45,84 +46,154 @@
           <td style="border:solid 1pt">站号</td>
           <td style="border:solid 1pt">时间</td>
           <td style="border:solid 1pt">总粒子数</td>
+          <td style="border:solid 1pt">（实时）总粒子数</td>
           <td style="border:solid 1pt">总粒子数浓度</td>
           <td style="border:solid 1pt">谱宽</td>
           <td style="border:solid 1pt">本次降水量</td>
+          <td style="border:solid 1pt">（实时）累计降水量</td>
+          <td style="border:solid 1pt">自动站分钟降水</td>
           <td style="border:solid 1pt">雨强</td>
+          <td style="border:solid 1pt">（实时）雨强</td>
           <td style="border:solid 1pt">平均直径</td>
           <td style="border:solid 1pt">均方根直径</td>
           <td style="border:solid 1pt">均立方根直径</td>
           <td style="border:solid 1pt">液态含水量</td>
           <td style="border:solid 1pt">雷达反射率因子</td>
+          <td style="border:solid 1pt">（实时）雷达反射率</td>
           <td style="border:solid 1pt">天气代码</td>
-          <td style="border:solid 1pt">雨中消光能见度</td>
-          <td style="border:solid 1pt">动能</td>
-          <td style="border:solid 1pt">d1</td>
-          <td style="border:solid 1pt">d2</td>
-          <td style="border:solid 1pt">d3</td>
-          <td style="border:solid 1pt">d4</td>
-          <td style="border:solid 1pt">d5</td>
-          <td style="border:solid 1pt">d6</td>
-          <td style="border:solid 1pt">d7</td>
-          <td style="border:solid 1pt">d8</td>
-          <td style="border:solid 1pt">d9</td>
-          <td style="border:solid 1pt">d10</td>
-          <td style="border:solid 1pt">d11</td>
-          <td style="border:solid 1pt">d12</td>
-          <td style="border:solid 1pt">d13</td>
-          <td style="border:solid 1pt">d14</td>
-          <td style="border:solid 1pt">d15</td>
-          <td style="border:solid 1pt">d16</td>
-          <td style="border:solid 1pt">d17</td>
-          <td style="border:solid 1pt">d18</td>
-          <td style="border:solid 1pt">d19</td>
-          <td style="border:solid 1pt">d20</td>
-          <td style="border:solid 1pt">d21</td>
-          <td style="border:solid 1pt">d22</td>
-          <td style="border:solid 1pt">d23</td>
-          <td style="border:solid 1pt">d24</td>
-          <td style="border:solid 1pt">d25</td>
-          <td style="border:solid 1pt">d26</td>
-          <td style="border:solid 1pt">d27</td>
-          <td style="border:solid 1pt">d28</td>
-          <td style="border:solid 1pt">d29</td>
-          <td style="border:solid 1pt">d30</td>
-          <td style="border:solid 1pt">d31</td>
-          <td style="border:solid 1pt">d32</td>
-          <td style="border:solid 1pt">v1</td>
-          <td style="border:solid 1pt">v2</td>
-          <td style="border:solid 1pt">v3</td>
-          <td style="border:solid 1pt">v4</td>
-          <td style="border:solid 1pt">v5</td>
-          <td style="border:solid 1pt">v6</td>
-          <td style="border:solid 1pt">v7</td>
-          <td style="border:solid 1pt">v8</td>
-          <td style="border:solid 1pt">v9</td>
-          <td style="border:solid 1pt">v10</td>
-          <td style="border:solid 1pt">v11</td>
-          <td style="border:solid 1pt">v12</td>
-          <td style="border:solid 1pt">v13</td>
-          <td style="border:solid 1pt">v14</td>
-          <td style="border:solid 1pt">v15</td>
-          <td style="border:solid 1pt">v16</td>
-          <td style="border:solid 1pt">v17</td>
-          <td style="border:solid 1pt">v18</td>
-          <td style="border:solid 1pt">v19</td>
-          <td style="border:solid 1pt">v20</td>
-          <td style="border:solid 1pt">v21</td>
-          <td style="border:solid 1pt">v22</td>
-          <td style="border:solid 1pt">v23</td>
-          <td style="border:solid 1pt">v24</td>
-          <td style="border:solid 1pt">v25</td>
-          <td style="border:solid 1pt">v26</td>
-          <td style="border:solid 1pt">v27</td>
-          <td style="border:solid 1pt">v28</td>
-          <td style="border:solid 1pt">v29</td>
-          <td style="border:solid 1pt">v30</td>
-          <td style="border:solid 1pt">v31</td>
-          <td style="border:solid 1pt">v32</td>
+          <td style="border:solid 1pt">（实时）雨中消光能见度</td>
+          <td style="border:solid 1pt">（实时）动能</td>
+          <td style="border:solid 1pt">ND1</td>
+          <td style="border:solid 1pt">ND2</td>
+          <td style="border:solid 1pt">ND3</td>
+          <td style="border:solid 1pt">ND4</td>
+          <td style="border:solid 1pt">ND5</td>
+          <td style="border:solid 1pt">ND6</td>
+          <td style="border:solid 1pt">ND7</td>
+          <td style="border:solid 1pt">ND8</td>
+          <td style="border:solid 1pt">ND9</td>
+          <td style="border:solid 1pt">ND10</td>
+          <td style="border:solid 1pt">ND11</td>
+          <td style="border:solid 1pt">ND12</td>
+          <td style="border:solid 1pt">ND13</td>
+          <td style="border:solid 1pt">ND14</td>
+          <td style="border:solid 1pt">ND15</td>
+          <td style="border:solid 1pt">ND16</td>
+          <td style="border:solid 1pt">ND17</td>
+          <td style="border:solid 1pt">ND18</td>
+          <td style="border:solid 1pt">ND19</td>
+          <td style="border:solid 1pt">ND20</td>
+          <td style="border:solid 1pt">ND21</td>
+          <td style="border:solid 1pt">ND22</td>
+          <td style="border:solid 1pt">ND23</td>
+          <td style="border:solid 1pt">ND24</td>
+          <td style="border:solid 1pt">ND25</td>
+          <td style="border:solid 1pt">ND26</td>
+          <td style="border:solid 1pt">ND27</td>
+          <td style="border:solid 1pt">ND28</td>
+          <td style="border:solid 1pt">ND29</td>
+          <td style="border:solid 1pt">ND30</td>
+          <td style="border:solid 1pt">ND31</td>
+          <td style="border:solid 1pt">ND32</td>
+          <td style="border:solid 1pt">NV1</td>
+          <td style="border:solid 1pt">NV2</td>
+          <td style="border:solid 1pt">NV3</td>
+          <td style="border:solid 1pt">NV4</td>
+          <td style="border:solid 1pt">NV5</td>
+          <td style="border:solid 1pt">NV6</td>
+          <td style="border:solid 1pt">NV7</td>
+          <td style="border:solid 1pt">NV8</td>
+          <td style="border:solid 1pt">NV9</td>
+          <td style="border:solid 1pt">NV10</td>
+          <td style="border:solid 1pt">NV11</td>
+          <td style="border:solid 1pt">NV12</td>
+          <td style="border:solid 1pt">NV13</td>
+          <td style="border:solid 1pt">NV14</td>
+          <td style="border:solid 1pt">NV15</td>
+          <td style="border:solid 1pt">NV16</td>
+          <td style="border:solid 1pt">NV17</td>
+          <td style="border:solid 1pt">NV18</td>
+          <td style="border:solid 1pt">NV19</td>
+          <td style="border:solid 1pt">NV20</td>
+          <td style="border:solid 1pt">NV21</td>
+          <td style="border:solid 1pt">NV22</td>
+          <td style="border:solid 1pt">NV23</td>
+          <td style="border:solid 1pt">NV24</td>
+          <td style="border:solid 1pt">NV25</td>
+          <td style="border:solid 1pt">NV26</td>
+          <td style="border:solid 1pt">NV27</td>
+          <td style="border:solid 1pt">NV28</td>
+          <td style="border:solid 1pt">NV29</td>
+          <td style="border:solid 1pt">NV30</td>
+          <td style="border:solid 1pt">NV31</td>
+          <td style="border:solid 1pt">NV32</td>
+          <td style="border:solid 1pt">NNKD1</td>
+          <td style="border:solid 1pt">NNKD2</td>
+          <td style="border:solid 1pt">NNKD3</td>
+          <td style="border:solid 1pt">NNKD4</td>
+          <td style="border:solid 1pt">NNKD5</td>
+          <td style="border:solid 1pt">NNKD6</td>
+          <td style="border:solid 1pt">NNKD7</td>
+          <td style="border:solid 1pt">NNKD8</td>
+          <td style="border:solid 1pt">NNKD9</td>
+          <td style="border:solid 1pt">NNKD10</td>
+          <td style="border:solid 1pt">NNKD11</td>
+          <td style="border:solid 1pt">NNKD12</td>
+          <td style="border:solid 1pt">NNKD13</td>
+          <td style="border:solid 1pt">NNKD14</td>
+          <td style="border:solid 1pt">NNKD15</td>
+          <td style="border:solid 1pt">NNKD16</td>
+          <td style="border:solid 1pt">NNKD17</td>
+          <td style="border:solid 1pt">NNKD18</td>
+          <td style="border:solid 1pt">NNKD19</td>
+          <td style="border:solid 1pt">NNKD20</td>
+          <td style="border:solid 1pt">NNKD21</td>
+          <td style="border:solid 1pt">NNKD22</td>
+          <td style="border:solid 1pt">NNKD23</td>
+          <td style="border:solid 1pt">NNKD24</td>
+          <td style="border:solid 1pt">NNKD25</td>
+          <td style="border:solid 1pt">NNKD26</td>
+          <td style="border:solid 1pt">NNKD27</td>
+          <td style="border:solid 1pt">NNKD28</td>
+          <td style="border:solid 1pt">NNKD29</td>
+          <td style="border:solid 1pt">NNKD30</td>
+          <td style="border:solid 1pt">NNKD31</td>
+          <td style="border:solid 1pt">NNKD32</td>
+          <td style="border:solid 1pt">NNKV1</td>
+          <td style="border:solid 1pt">NNKV2</td>
+          <td style="border:solid 1pt">NNKV3</td>
+          <td style="border:solid 1pt">NNKV4</td>
+          <td style="border:solid 1pt">NNKV5</td>
+          <td style="border:solid 1pt">NNKV6</td>
+          <td style="border:solid 1pt">NNKV7</td>
+          <td style="border:solid 1pt">NNKV8</td>
+          <td style="border:solid 1pt">NNKV9</td>
+          <td style="border:solid 1pt">NNKV10</td>
+          <td style="border:solid 1pt">NNKV11</td>
+          <td style="border:solid 1pt">NNKV12</td>
+          <td style="border:solid 1pt">NNKV13</td>
+          <td style="border:solid 1pt">NNKV14</td>
+          <td style="border:solid 1pt">NNKV15</td>
+          <td style="border:solid 1pt">NNKV16</td>
+          <td style="border:solid 1pt">NNKV17</td>
+          <td style="border:solid 1pt">NNKV18</td>
+          <td style="border:solid 1pt">NNKV19</td>
+          <td style="border:solid 1pt">NNKV20</td>
+          <td style="border:solid 1pt">NNKV21</td>
+          <td style="border:solid 1pt">NNKV22</td>
+          <td style="border:solid 1pt">NNKV23</td>
+          <td style="border:solid 1pt">NNKV24</td>
+          <td style="border:solid 1pt">NNKV25</td>
+          <td style="border:solid 1pt">NNKV26</td>
+          <td style="border:solid 1pt">NNKV27</td>
+          <td style="border:solid 1pt">NNKV28</td>
+          <td style="border:solid 1pt">NNKV29</td>
+          <td style="border:solid 1pt">NNKV30</td>
+          <td style="border:solid 1pt">NNKV31</td>
+          <td style="border:solid 1pt">NNKV32</td>
           
      </tr>
+  
   <%
 
   
@@ -131,12 +202,13 @@
          {
     	 
     	  String longdata=rsSpectrum.getString("Sta_DVData");  
-    	  int[][] DVData=new calc().getlongdata(longdata);;   
-    	  double I;             
+       	  int[][] DVData=new calc().getlongdata(longdata);;   
+    	  double I=0;             
     	  int []NK=new int[32];   //存储各档粒子数（按直径分） 
     	  int []NV=new int[32];   //存储各档粒子数（按速度分） 
     	  double Pi=3.1415926;
-          double []NNK=new double[32];  //存储格挡粒子数浓度（按直径分）
+    	  double []NNKD=new double[32];  //存储格挡粒子数浓度（按直径分） 
+          double []NNKV=new double[32];  //存储格挡粒子数浓度（按速度分） 
     	  double []DD={0.0625,0.1875,0.3125,0.4375,0.5625,0.6875,
     				0.8125,0.9375,1.0625,1.1875,1.375,1.625,1.875,2.125,2.375,2.750,
     				3.250,3.750,4.250,4.750,5.500,6.500,7.500,8.500,9.500,11.000,13.000,
@@ -153,43 +225,40 @@
     	
     		if(longdata.indexOf("1")==-1&&longdata.indexOf("2")==-1&&longdata.indexOf("3")==-1&&longdata.indexOf("4")==-1&&longdata.indexOf("5")==-1&&longdata.indexOf("6")==-1
     				&&longdata.indexOf("7")==-1&&longdata.indexOf("8")==-1&&longdata.indexOf("9")==-1&&longdata.indexOf("A")==-1&&longdata.indexOf("B")==-1&&longdata.indexOf("C")==-1
-    				&&longdata.indexOf("D")==-1&&longdata.indexOf("E")==-1&&longdata.indexOf("F")==-1){continue;}
+    				&&longdata.indexOf("D")==-1&&longdata.indexOf("E")==-1&&longdata.indexOf("F")==-1){N0=0;NN0=0;}
     		
     		
     		
     		else{
     		
     		for(int m=0;m<32;m++){    //列循环
-    			NK[m]=0;NNK[m]=0;
+    			NK[m]=0;NNKD[m]=0;NNKV[m]=0;NV[m]=0;
     			for(int n=0;n<32;n++){   //行循环
     			NK[m]=NK[m]+DVData[n][m];            //各档粒子数（按直径分）
-    			NNK[m]=NNK[m]+DVData[n][m]/(54*Math.pow(10, -4)*DV[n]*60);            //各档粒子浓度（按直径分）
+    			NV[m]=NV[m]+DVData[m][n];            //各档粒子数（按速度分）
+    			NNKD[m]=NNKD[m]+DVData[n][m]/(54*Math.pow(10, -4)*DD[n]*60);            //各档粒子浓度（按直径分）
+    			NNKV[m]=NNKV[m]+DVData[m][n]/(54*Math.pow(10, -4)*DV[n]*60);            //各档粒子浓度(按速度分)
+    			BigDecimal NNKD_bg = new BigDecimal(NNKD[m]);
+        		NNKD[m] = NNKD_bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();    //各档数浓度保留2位小数
+    			BigDecimal NNKV_bg = new BigDecimal(NNKV[m]);
+        		NNKV[m] = NNKV_bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();    //各档数浓度保留2位小数
     			}		
-    			if (m>=20)  //凡是大于5mm的粒子都删去
-    			{NK[m]=0;
-    			NNK[m]=0;}
+    			//if (m>=20)  //凡是大于5mm的粒子都删去
+    			//{NK[m]=0;
+    			//NV[m]=0;
+    			//NNKD[m]=0;
+    			//NNKV[m]=0;}
     			N0=N0+NK[m];          //计算总粒子数
-    			NN0=NN0+NNK[m];        //计算总粒子数浓度
+    			NN0=NN0+NNKD[m];        //计算总粒子数浓度(按直径分)
     			R=R+((NK[m]*Math.pow(DD[m], 3)*Pi*Math.pow(10, -6))/(6*54*Math.pow(10, -4)));  //计算降水量
     			D1temp=D1temp+NK[m]*DD[m];                     
     			D2temp=D2temp+NK[m]*Math.pow(DD[m],2);
     			D3temp=D3temp+NK[m]*Math.pow(DD[m],3);
-    			LQtemp=LQtemp+(NNK[m]*Math.pow(DD[m], 3));
-    			Ztemp=Ztemp+(NNK[m]*Math.pow(DD[m],6));
+    			LQtemp=LQtemp+(NNKD[m]*Math.pow(DD[m], 3));
+    			Ztemp=Ztemp+(NNKD[m]*Math.pow(DD[m],6));
     			Etemp=Etemp+(NK[m]*Math.pow(DV[m],2)*Math.pow(DD[m],3));
     		}
-    		for(int m=0;m<32;m++){    //行循环
-    			NV[m]=0;
-    			for(int n=0;n<32;n++){   //列循环
-    			NV[m]=NV[m]+DVData[m][n];            //各档粒子数（按速度分）
     		
-    			}		
-    			if (m>=20)  //凡是大于5mm的粒子都删去
-    			{NV[m]=0;
-    			}
-    			
-    			
-    		}
     		I=R*60;    //计算雨强  
     		D1=D1temp/N0;
     		D2=Math.pow(D2temp/N0, 0.5);
@@ -236,15 +305,20 @@
              out.print("<td style='border:solid 1pt'>"+rsSpectrum.getString("Sta_ID")+"</td>");
              out.print("<td style='border:solid 1pt'>"+rsSpectrum.getString("Sta_TimeIn")+"</td>");
              out.print("<td style='border:solid 1pt'>"+N0+"</td>");
+             out.print("<td style='border:solid 1pt'>"+rsReal.getString("Sta_GranuleNums")+"</td>");
              out.print("<td style='border:solid 1pt'>"+NN0+"</td>");
              out.print("<td style='border:solid 1pt'>"+Dmax+"</td>");
              out.print("<td style='border:solid 1pt'>"+R+"</td>");
+             out.print("<td style='border:solid 1pt'>"+rsReal.getString("Sta_RainSum")+"</td>");
+             out.print("<td style='border:solid 1pt'></td>");
              out.print("<td style='border:solid 1pt'>"+I+"</td>");
+             out.print("<td style='border:solid 1pt'>"+rsReal.getString("Sta_RainIntensity")+"</td>");
              out.print("<td style='border:solid 1pt'>"+D1+"</td>");
              out.print("<td style='border:solid 1pt'>"+D2+"</td>");
              out.print("<td style='border:solid 1pt'>"+D3+"</td>");
              out.print("<td style='border:solid 1pt'>"+LQ+"</td>");
              out.print("<td style='border:solid 1pt'>"+Z+"</td>");
+             out.print("<td style='border:solid 1pt'>"+rsReal.getString("Sta_RadarDBZ")+"</td>");
              out.print("<td style='border:solid 1pt'>"+rsReal.getString("Sta_WeatherCode")+"</td>");
              out.print("<td style='border:solid 1pt'>"+rsReal.getString("Sta_MORSee")+"</td>");
              out.print("<td style='border:solid 1pt'>"+rsReal.getString("Sta_KineticEnergy")+"</td>");
@@ -312,9 +386,75 @@
              out.print("<td style='border:solid 1pt'>"+NV[29]+"</td>");
              out.print("<td style='border:solid 1pt'>"+NV[30]+"</td>");
              out.print("<td style='border:solid 1pt'>"+NV[31]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[0]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[1]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[2]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[3]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[4]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[5]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[6]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[7]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[8]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[9]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[10]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[11]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[12]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[13]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[14]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[15]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[16]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[17]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[18]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[19]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[20]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[21]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[22]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[23]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[24]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[25]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[26]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[27]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[28]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[29]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[30]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKD[31]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[0]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[1]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[2]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[3]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[4]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[5]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[6]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[7]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[8]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[9]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[10]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[11]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[12]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[13]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[14]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[15]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[16]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[17]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[18]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[19]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[20]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[21]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[22]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[23]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[24]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[25]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[26]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[27]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[28]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[29]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[30]+"</td>");
+             out.print("<td style='border:solid 1pt'>"+NNKV[31]+"</td>");
             
              
     	  }
+  
+    	  
  
          
  		 if(rsReal != null)
